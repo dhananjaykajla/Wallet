@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <ctime>
 #include "wallet.h"
 std::vector<std::string> tokenizer(std::string str)
 {
@@ -52,8 +53,16 @@ wallet::wallet(std::string file_name)
         history[i] = make_tuple(stoi(tokens[0]),tokens[1],stod(tokens[2]),str,str1,stod(tokens[3]));
         i++;
     }
-    std::ofstream outfile;
-    outfile.open("")
+    std::ofstream outfile,outfile1;
+    outfile.open(file_name +"_logs",ios::app);
+    outfile1.open("universal_logs",ios::app);
+    time_t curr_time;
+	curr_time = time(NULL);
+	char *tm = ctime(&curr_time);
+    outfile << "Wallet accessed at time " << tm << '\n' ;
+    outfile1 << "Wallet file : " << file_name << " accessed at time "  << tm << '\n';
+    outfile.close();
+    outfile1.close();
 }
 wallet::wallet(std::string file_name,std::string wall_name)
 {
@@ -71,7 +80,31 @@ wallet::wallet(std::string file_name,std::string wall_name)
     outfile << wallet_name << '\n';
     outfile << 0 << ' ' << 0 << '\n';
     outfile.close();
+    std::ofstream outfile,outfile1;
+    outfile.open(file_name +"_logs",ios::app);
+    outfile1.open("universal_logs",ios::app);
+    time_t curr_time;
+	curr_time = time(NULL);
+	char *tm = ctime(&curr_time);
+    outfile << "Wallet created at time " << tm << '\n' ;
+    outfile1 << "Wallet file : " << file_name << " created at time "  << tm << '\n';
+    outfile.close();
+    outfile1.close();
     return;
+}
+void wallet::add_entry(std::tuple <int, std::string, double, std::string, std::string, double> tp )
+{
+    history.push_back(tp);
+    std::ofstream outfile,outfile1;
+    outfile.open(wallet_file_name +"_logs",ios::app);
+    outfile1.open("universal_logs",ios::app);
+    time_t curr_time;
+	curr_time = time(NULL);
+	char *tm = ctime(&curr_time);
+    outfile << "Wallet entry : " << get<0>(tp) << ' ' << get<1>(tp) << ' ' << get<2>(tp) << ' '<< get<3>(tp) << ' ' << get<4>(tp) << ' ' << get<5>(tp) << ' '  << " added at time " << tm << '\n' ;
+    outfile << "Wallet file : " << wallet_file_name << " Wallet entry : " << get<0>(tp) << ' ' << get<1>(tp) << ' ' << get<2>(tp) << ' '<< get<3>(tp) << ' ' << get<4>(tp) << ' ' << get<5>(tp) << ' '  << " added at time " << tm << '\n' ;
+    outfile.close();
+    outfile1.close();
 }
 wallet::~wallet()
 {

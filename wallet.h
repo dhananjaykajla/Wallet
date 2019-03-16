@@ -23,7 +23,8 @@ public:
     void generate_wallet_file(std::string);//puts the wallet in an organised text file
     void add_entry(std::tuple <int, std::string, double, std::string, std::string, double> );// adds an entry into the wallet
     void delete_entry(int s_no, std::string file_name);//deletes the s_no'th entry from the wallet
-    void show_logs();//shows wallet editing logs
+    void show_local_logs();//shows current wallet editing logs
+    void show_universal_logs();//shows universal wallet editing logs
     //void statistics();//To be implemented in future
     ~wallet();
 };
