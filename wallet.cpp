@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <ctime>
 #include "wallet.h"
+#include <stdlib.h>
 std::vector<std::string> tokenizer(std::string str)
 {
     std::vector<std::string> vs;
@@ -75,11 +76,11 @@ wallet::wallet(std::string file_name,std::string wall_name)
     valid_wallet = true;
     wallet_file_name = file_name;
     wallet_name = wall_name;
-    std::ofstream outfile;
-    outfile.open(file_name);
-    outfile << wallet_name << '\n';
-    outfile << 0 << ' ' << 0 << '\n';
-    outfile.close();
+    std::ofstream ofile;
+    ofile.open(file_name);
+    ofile << wallet_name << '\n';
+    ofile << 0 << ' ' << 0 << '\n';
+    ofile.close();
     std::ofstream outfile,outfile1;
     outfile.open(file_name +"_logs",ios::app);
     outfile1.open("universal_logs",ios::app);
@@ -92,7 +93,7 @@ wallet::wallet(std::string file_name,std::string wall_name)
     outfile1.close();
     return;
 }
-void wallet::add_entry(std::tuple <int, std::string, double, std::string, std::string, double> tp )
+bool wallet::add_entry(std::tuple <int, std::string, double, std::string, std::string, double> tp )
 {
     history.push_back(tp);
     std::ofstream outfile,outfile1;
@@ -103,6 +104,29 @@ void wallet::add_entry(std::tuple <int, std::string, double, std::string, std::s
 	char *tm = ctime(&curr_time);
     outfile << "Wallet entry : " << get<0>(tp) << ' ' << get<1>(tp) << ' ' << get<2>(tp) << ' '<< get<3>(tp) << ' ' << get<4>(tp) << ' ' << get<5>(tp) << ' '  << " added at time " << tm << '\n' ;
     outfile << "Wallet file : " << wallet_file_name << " Wallet entry : " << get<0>(tp) << ' ' << get<1>(tp) << ' ' << get<2>(tp) << ' '<< get<3>(tp) << ' ' << get<4>(tp) << ' ' << get<5>(tp) << ' '  << " added at time " << tm << '\n' ;
+    outfile.close();
+    outfile1.close();
+    return true;
+}
+bool wallet::show_wallet()
+{
+    if(!valid_wallet)
+    {
+        return;
+    }
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n";
+    std::cout << "Wallet : " << wallet_name << '\n';
+    std::cout << "Number of Transactions : " << no_of_transactions << '\n';
+    std::cout << "Balance : " << balance << '\n';
+
+    std::ofstream outfile,outfile1;
+    outfile.open(wallet_file_name +"_logs",ios::app);
+    outfile1.open("universal_logs",ios::app);
+    time_t curr_time;
+	curr_time = time(NULL);
+	char *tm = ctime(&curr_time);
+    outfile << "Wallet accessed at time " << tm << '\n' ;
+    outfile1 << "Wallet file : " << file_name << " accessed at time "  << tm << '\n';
     outfile.close();
     outfile1.close();
 }
