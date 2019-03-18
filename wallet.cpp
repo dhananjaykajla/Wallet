@@ -67,11 +67,13 @@ wallet::wallet(std::string file_name)
     int i = 0;
     while(getline(infile,line))
     {
+        //std::cout << line << "\n";
         std::vector<std::string> tokens = tokenizer(line);
         std::string str,str1,str2;
         getline(infile,str);
         getline(infile,str1);
         getline(infile,str2);
+        std::cout << history.size() << '\n';
         history[i] = {tokens[0],str,tokens[1],str1,str2,tokens[2]};
         i++;
     }
@@ -127,7 +129,10 @@ void wallet::write_wallet()
     ofile << no_of_transactions << ' ' << balance << '\n';
     for(auto tpl : history)
     {
-        ofile << tpl[0] << ' ' << tpl[1] << ' ' << tpl[2] << ' ' << tpl[3] << ' ' << tpl[4] << ' ' << tpl[5] << '\n';
+        ofile << tpl[0] << ' ' << tpl[2] <<  ' ' << tpl[5] << '\n';
+        ofile << tpl[1] << '\n';
+        ofile << tpl[4] << '\n';
+        ofile << tpl[5] << '\n';
     }
     ofile.close();
     std::ofstream outfile,outfile1;
@@ -281,7 +286,9 @@ bool wallet::add_entry(std::vector<std::string> tp)
     {
         return false;
     }
-    tp[5] = to_string(stod(tp[2])+balance); 
+    tp[5] = to_string(stod(tp[2])+balance);
+    no_of_transactions += 1;
+    balance = stod(tp[5]); 
     history.push_back(tp);
     std::ofstream outfile,outfile1;
     outfile.open(wallet_file_name +"_logs",ios::app);
