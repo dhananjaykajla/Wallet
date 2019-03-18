@@ -102,6 +102,10 @@ wallet::wallet(std::string file_name,std::string wall_name)
     ofile << wallet_name << '\n';
     ofile << 0 << ' ' << 0 << '\n';
     ofile.close();
+    ofstream outerfile;
+    outerfile.open("all_wallets",ios::app);
+    outerfile << wallet_file_name << '\n';
+    outerfile.close();
     history.resize(0);
     std::ofstream outfile,outfile1;
     outfile.open(file_name +"_logs",ios::app);
@@ -164,7 +168,10 @@ bool wallet::show_wallet()
     return true;
 }
 bool wallet::show_wallet(int a, int b)
-{
+{ofstream outerfile;
+    outerfile.open("all_wallets",ios::app);
+    outerfile << wallet_file_name << '\n';
+    outerfile.close();
     if(!valid_wallet)
     {
         return false;
@@ -309,6 +316,10 @@ bool wallet::delete_entry(int s_no)
     outfile1.close();
     write_wallet();
     return true;
+}
+int wallet::get_number_of_transactions()
+{
+    return no_of_transactions;
 }
 wallet::~wallet()
 {
