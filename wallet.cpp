@@ -265,9 +265,8 @@ bool wallet::search_wallet_approx(int parameter, std::string str)//shows chronol
     outfile1.close();
     return true;
 }
-bool sort_wallet(int parameter)
+bool wallet::sort_wallet(int parameter)
 {
-    //not_implemented
 }
 bool wallet::add_entry(std::vector<std::string> tp)
 {
@@ -302,10 +301,10 @@ bool wallet::delete_entry(int s_no)
     outfile.open(wallet_file_name +"_logs",ios::app);
     outfile1.open("universal_logs",ios::app);
     time_t curr_time;
-	curr_time = time(NULL);
-	char *tm = ctime(&curr_time);
-    outfile << "Wallet entry : " << tp[0] << ' ' << tp[1] << ' ' << tp[2] << ' '<< tp[3] << ' ' << tp[4] << ' ' << tp[5] << ' '  << " added at time " << tm << '\n' ;
-    outfile1 << "Wallet file : " << wallet_file_name << " Wallet entry : " << tp[0] << ' ' << tp[1] << ' ' << tp[2] << ' '<< tp[3] << ' ' << tp[4] << ' ' << tp[5] << ' '  << " added at time " << tm << '\n' ;
+    curr_time = time(NULL);
+    char *tm = ctime(&curr_time);
+    outfile << "Wallet entry : with s.no. " << s_no << " deleted at time " << tm << '\n' ;
+    outfile1 << "Wallet file : " << wallet_file_name << " Wallet entry : with s.no. " << s_no << " deleted at time " << tm << '\n' ;
     outfile.close();
     outfile1.close();
     write_wallet();
