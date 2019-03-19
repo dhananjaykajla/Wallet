@@ -313,7 +313,14 @@ bool wallet::add_entry(std::vector<std::string> tp)
 }
 bool wallet::delete_entry(int s_no)
 {
+    if(s_no > history.size())
+    {
+        return false;
+    }
     int i = 0;
+    auto it = history[s_no-1];
+    no_of_transactions -= 1;
+    balance -= stod(it[5]);
     history.erase(history.begin()+s_no-1);
     for(int i=s_no-1;i<history.size();i++)
     {
