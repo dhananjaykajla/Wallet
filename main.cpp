@@ -28,7 +28,7 @@ int create_wallet()
 }
 bool show_all_wallets()
 {
-    ifstream innerfile("all_wallets");
+    ifstream innerfile("all_wallets.logs");
     if(!innerfile.good())
     {
         return false;
@@ -121,6 +121,7 @@ void existing_wallet()
 	            curr_time = time(NULL);
 	            char *tm = ctime(&curr_time);
                 date = tm;
+                date.pop_back();
             }
             vs.push_back(date);
             std::cout << "Please enter a remark on the transaction\n";
